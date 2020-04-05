@@ -1,0 +1,82 @@
+body{
+    background-color : #00405c;
+}
+.white-page{
+    color : white;
+}
+.select-page{
+    text-align : center;
+    margin-top : 20vh;
+}
+.select-box{
+    border : 1px black solid;
+    height : 120px;
+    margin : 50px auto;
+    width : 70vw;
+    background-color: white;
+    padding : 0;
+}
+.d-block{
+    height : 100px;
+    margin : 30px 0 0 0;
+    font-weight : bold;
+    font-size : 32px;
+    border : none;
+    padding : 0;
+    color : #94b7d8
+}
+.d-block:hover{
+    text-decoration: none;
+    color : #0056b3;
+    cursor: pointer;
+}
+.form-check{
+    width : 400px;
+}
+.form-control{
+    max-width : 500px;
+}
+#dashboard{
+    padding : 0;
+    margin : auto;
+    height : 100vh;
+    max-width : 800px;
+    border : 2px white solid;
+    border-radius: 10px;
+}
+#dashboard #dash-info{
+    display : flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom : 3px white solid;
+    border-radius: 10px;
+    margin-bottom : 5px;
+}
+#dashboard #receipt .receipt-box{
+    border : 1px rgb(167, 167, 167) solid;
+    height : 100px;
+    width : 50vw;
+    margin-left:auto;
+    margin-right : auto;
+    margin-bottom : 30px;
+    overflow: hidden;
+    box-sizing : border-box;
+    display : flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#dashboard #receipt .receipt-box .date{
+    margin-top : auto;
+}
+#purchase-form{
+    border : white 5px solid;
+    border-radius : 20px;
+    background-color: #0072a3;
+    max-width : 800px;
+    height : 450px;
+    margin : 50px auto;
+    padding : 25px;
+}
+#dashboard .modal{
+    color : black;
+}
