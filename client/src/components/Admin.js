@@ -42,7 +42,7 @@ class Admin extends Component{
             if(auth === false){
                 return(
                     <div>
-                        Allo
+                        
                     </div>
                 )
             }else{
