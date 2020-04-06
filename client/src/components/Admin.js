@@ -76,14 +76,14 @@ class Admin extends Component{
                                     <th>{live.b}</th>
                                 </tr>
                                 <tr>
-                                    <th>Avenue Pharmacy</th>
+                                    <th>Day Pharmacy</th>
                                     <th>15</th>
                                     <th>{day.available}</th>
                                     <th>{day.a}</th>
                                     <th>{day.b}</th>
                                 </tr>
                                 <tr>
-                                    <th>Avenue Pharmacy</th>
+                                    <th>Pro Pharmacy</th>
                                     <th>15</th>
                                     <th>{pro.available}</th>
                                     <th>{pro.a}</th>
