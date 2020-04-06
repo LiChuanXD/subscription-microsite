@@ -22,12 +22,16 @@ class Purchase extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const number = this.props.user.number;
-        const { outlet , a , b } = this.state;
-        const buy = { number , outlet , a , b }
-        this.props.buyItems(buy);
-        this.props.history.push(`/dashboard/${this.props.user._id}`);
-        this.props.fetchUser(this.props.user._id);
+        if(this.state.a + this.state.b < 6){
+            console.log("Please buy more than 6 items")
+        }else{
+            const number = this.props.user.number;
+            const { outlet , a , b } = this.state;
+            const buy = { number , outlet , a , b }
+            this.props.buyItems(buy);
+            this.props.history.push(`/dashboard/${this.props.user._id}`);
+            this.props.fetchUser(this.props.user._id);
+        }; 
     };
 
     render(){
