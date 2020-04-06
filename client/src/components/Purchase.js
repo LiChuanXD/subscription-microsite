@@ -46,25 +46,25 @@ class Purchase extends Component {
 
         const lOption = () => {
             if(liveLength === 0){
-                return <option value="avenue" disabled>Live Pharmacy (limit reached)</option>
+                return <option value="live" disabled>Live Pharmacy (limit reached)</option>
             }else{
-                return <option value="avenue">Live Pharmacy</option>
+                return <option value="live">Live Pharmacy</option>
             }
         };
 
         const dOption = () => {
             if(dayLength === 0){
-                return <option value="avenue" disabled>Day Pharmacy (limit reached)</option>
+                return <option value="day" disabled>Day Pharmacy (limit reached)</option>
             }else{
-                return <option value="avenue">Day Pharmacy</option>
+                return <option value="day">Day Pharmacy</option>
             }
         };
 
         const pOption = () => {
             if(proLength === 0){
-                return <option value="avenue" disabled>Pro Pharmacy (limit reached)</option>
+                return <option value="pro" disabled>Pro Pharmacy (limit reached)</option>
             }else{
-                return <option value="avenue">Pro Pharmacy</option>
+                return <option value="pro">Pro Pharmacy</option>
             }
         };
 
