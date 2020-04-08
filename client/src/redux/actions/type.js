@@ -1,6 +1,13 @@
 export const REGISTER_USER = "REGISTER_USER";
 export const LOGIN_USER = "LOGIN_USER";
-export const FETCH_OUTLET = "FETCH_OUTLET";
-export const USER_ERROR = "USER_ERROR";
-export const PURCHASE_ITEMS = "PURCHASE_ITEMS";
 export const FETCH_USER = "FETCH_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+
+export const FETCH_OUTLET = "FETCH_OUTLET";
+
+export const FETCH_ERROR = "FETCH_ERROR";
+export const CLEAR_ERROR = "CLEAR_ERROR";
+
+export const PURCHASE_ITEMS = "PURCHASE_ITEMS";
+export const PURCHASE_SUCCESS = "PURCHASE_SUCCESS";
+export const CLEAR_PURCHASE = "CLEAR_PURCHASE";

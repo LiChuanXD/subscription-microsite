@@ -1,4 +1,4 @@
-import { REGISTER_USER , USER_ERROR , LOGIN_USER , FETCH_USER } from '../actions/type';
+import { REGISTER_USER , LOGIN_USER , PURCHASE_ITEMS , PURCHASE_SUCCESS , CLEAR_PURCHASE, LOGOUT_USER } from '../actions/type';
 
 const initState = {
     _id : "",
@@ -6,29 +6,13 @@ const initState = {
     number : "",
     purchases : [],
     auth : false,
-    error : ""
+    purchase : false
 }
 
 const memberReducer = ( state = initState , action ) => {
     console.log(action);
     switch(action.type){
         case REGISTER_USER:
-            return {
-                ...state,
-                _id : action.payload._id,
-                name : action.payload.name,
-                number : action.payload.number,
-                purchases : [...action.payload.purchases],
-                auth : true,
-                error : ""
-            };
-
-        case USER_ERROR:
-            return{
-                ...state,
-                error : action.payload.data.msg
-            };
-
         case LOGIN_USER:
             return{
                 ...state,
@@ -36,24 +20,41 @@ const memberReducer = ( state = initState , action ) => {
                 name : action.payload.name,
                 number : action.payload.number,
                 purchases : [...action.payload.purchases],
-                auth : true,
-                error : ""
+                auth : true
             };
 
-        case FETCH_USER:
+        case LOGOUT_USER:
             return{
                 ...state,
-                _id : action.payload._id,
-                name : action.payload.name,
-                number : action.payload.number,
-                purchases : [...action.payload.purchases],
-                auth : true,
-                error : ""
+                _id : "",
+                name : "",
+                number : "",
+                purchases : [],
+                auth : false,
+                purchase : false
+            };
+
+        case PURCHASE_ITEMS:
+            return{
+                ...state,
+                purchases : [...state.purchases , action.payload]
+            };
+
+        case PURCHASE_SUCCESS:
+            return {
+                ...state,
+                purchase : true
+            };
+
+        case CLEAR_PURCHASE:
+            return {
+                ...state,
+                purchase : false
             };
 
         default:
             return state;
-    }
+    };
 };
 
 export default memberReducer;

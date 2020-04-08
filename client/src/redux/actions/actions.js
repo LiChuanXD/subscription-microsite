@@ -1,4 +1,4 @@
-import {FETCH_OUTLET , REGISTER_USER , USER_ERROR, LOGIN_USER , PURCHASE_ITEMS , FETCH_USER} from './type';
+import {FETCH_OUTLET , REGISTER_USER , FETCH_ERROR, LOGIN_USER , PURCHASE_ITEMS , FETCH_USER , CLEAR_ERROR , PURCHASE_SUCCESS , CLEAR_PURCHASE , LOGOUT_USER} from './type';
 import axios from 'axios';
 
 //get all outlet infomation
@@ -24,7 +24,7 @@ export const registerUser = user => dispatch => {
     })
     .catch(err=>{
         dispatch({
-            type : USER_ERROR,
+            type : FETCH_ERROR,
             payload : err.response
         })
     })
@@ -41,27 +41,42 @@ export const loginUser = user => dispatch => {
     })
     .catch(err=>{
         dispatch({
-            type : USER_ERROR,
+            type : FETCH_ERROR,
             payload : err.response
         })
     })
 };
 
+//buy items action
 export const buyItems = items => dispatch => {
     axios.put('/api/purchase' , items)
     .then(res=>{
-        dispatch({type : PURCHASE_ITEMS});
-    })
-    .catch(err=>console.log(err))
-}
-
-export const fetchUser = param => dispatch => {
-    axios.get(`/api/user/${param}`)
-    .then(res=>{
         dispatch({
-            type : FETCH_USER,
+            type : PURCHASE_ITEMS,
             payload : res.data
+        });
+        dispatch({type : PURCHASE_SUCCESS})
+    })
+    .then(()=>{
+        dispatch({type : CLEAR_PURCHASE})
+    })
+    .catch(err=>{
+        dispatch({
+            type : FETCH_ERROR,
+            payload : err.response
         })
     })
-    .catch(err=>console.log(err))
 }
+//clear error
+export const clearError = () => {
+    return{
+        type : CLEAR_ERROR
+    }
+}
+
+//logout user
+export const logoutUser = () => {
+    return{
+        type : LOGOUT_USER
+    };
+};

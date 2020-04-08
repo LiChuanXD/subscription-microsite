@@ -10,6 +10,11 @@ router.post('/register' , (req , res)=>{
         return res.status(400).json({msg : "Please enter all fields"});
     };
 
+    const regex = /\D/g;
+    if(regex.test(number)){
+        return res.status(400).json({msg : "Please only enter 'Number'"})
+    };
+
     const newMember = new Member({
         name,
         number
@@ -33,6 +38,11 @@ router.post('/login' , (req , res)=>{
         return res.status(400).json({msg : "Please enter all the fields"});
     };
 
+    const regex = /\D/g;
+    if(regex.test(number)){
+        return res.status(400).json({msg : "Please only enter 'Number'"})
+    };
+
     Member.findOne({number}).then(x=>{
         if(!x){
             //not found
@@ -43,17 +53,5 @@ router.post('/login' , (req , res)=>{
         }
     }).catch(err=>console.log(err))
 });
-
-//to get all users data -get- /api/user/all
-router.get('/all' , (req , res)=>{
-    Member.find().then(x=>res.status(200).json(x)).catch(err=>console.log(err))
-});
-
-//to get single user data -get- /api/user/:id
-router.get('/:id' , (req , res)=>{
-    const { id } = req.params
-    Member.findOne({_id : id}).then(x=>res.status(200).json(x)).catch(err=>console.log(err));
-});
-
 
 module.exports = router;

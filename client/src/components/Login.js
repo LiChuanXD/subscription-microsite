@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect , Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {loginUser} from '../redux/actions/actions';
+import {loginUser , clearError} from '../redux/actions/actions';
 
 class Login extends Component {
     constructor(props){
@@ -21,19 +21,7 @@ class Login extends Component {
 
     handleSubmit(e){
         e.preventDefault();
-        const regex = /\D/g;
-        if(regex.test(this.state.number)){
-            this.setState({
-                ...this.state,
-                error : true
-            });
-        }else{
-            this.setState({
-                ...this.state,
-                error : false
-            });
-            this.props.loginUser(this.state);
-        }
+        this.props.loginUser(this.state);
     };
 
     render(){
@@ -42,16 +30,36 @@ class Login extends Component {
         }else{
             return(
                 <div className="white-page">
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb row">
+                            <li className="breadcrumb-item">
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li className="breadcrumb-item">
+                                <Link to="/select">Select</Link>
+                            </li>
+                            <li className="breadcrumb-item">
+                                <Link to="/user">User</Link>
+                            </li>
+
+                            <li className="breadcrumb-item active" aria-current="page">
+                                Login
+                            </li>
+                        </ol>
+                    </nav>
+                    
                     <h1 className="mb-5 text-center">Login as Existing Member</h1>
                     <form className="mt-5" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="number">Enter your Phone Number</label>
-                            {this.state.error ? <div className="alert alert-danger" role="alert">
-                                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <strong>Please enter Number only</strong>
-                            </div> : null}
+                            {this.props.error.showError ? (
+                                <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <button onClick={()=>{this.props.clearError()}} type="button" data-dismiss="alert" className="close" aria-label="Close">
+                                        <span>&times;</span>
+                                    </button>
+                                    <strong>{this.props.error.msg}</strong>
+                                </div>
+                            ) : (null)}
                             <input required className="form-control text-center" type="text" name="number" id="number" placeholder="Mobile Number" value={this.state.number} onChange={this.handleChange} />
                         </div>
     
@@ -65,13 +73,15 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return{
-        user : state.member
+        user : state.member,
+        error : state.error
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return{
-        loginUser : user=>dispatch(loginUser(user))
+        loginUser : user=>dispatch(loginUser(user)),
+        clearError : ()=>dispatch(clearError())
     }
 };
 

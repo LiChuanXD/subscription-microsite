@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
+import { fetchOutlet } from '../redux/actions/actions';
 
 class Admin extends Component{
     constructor(props){
@@ -8,6 +10,10 @@ class Admin extends Component{
             admin : "",
             auth : false
         };
+    };
+
+    componentDidMount(){
+        this.props.fetchOutlet();
     };
 
     handleChange = e => {
@@ -33,10 +39,6 @@ class Admin extends Component{
     }
 
     render(){
-        const avenue = this.props.outlet[0]
-        const live = this.props.outlet[1]
-        const day = this.props.outlet[2]
-        const pro = this.props.outlet[3]
 
         const renderTable = auth => {
             if(auth === false){
@@ -63,31 +65,31 @@ class Admin extends Component{
                                 <tr>
                                     <th>Avenue Pharmacy</th>
                                     <th>15</th>
-                                    <th>{avenue.available}</th>
-                                    <th>{avenue.a}</th>
-                                    <th>{avenue.b}</th>
+                                    <th>{this.props.outlet.avenue.available}</th>
+                                    <th>{this.props.outlet.avenue.a}</th>
+                                    <th>{this.props.outlet.avenue.b}</th>
                                 </tr>
 
                                 <tr>
                                     <th>Live Pharmacy</th>
                                     <th>15</th>
-                                    <th>{live.available}</th>
-                                    <th>{live.a}</th>
-                                    <th>{live.b}</th>
+                                    <th>{this.props.outlet.live.available}</th>
+                                    <th>{this.props.outlet.live.a}</th>
+                                    <th>{this.props.outlet.live.b}</th>
                                 </tr>
                                 <tr>
                                     <th>Day Pharmacy</th>
                                     <th>15</th>
-                                    <th>{day.available}</th>
-                                    <th>{day.a}</th>
-                                    <th>{day.b}</th>
+                                    <th>{this.props.outlet.day.available}</th>
+                                    <th>{this.props.outlet.day.a}</th>
+                                    <th>{this.props.outlet.day.b}</th>
                                 </tr>
                                 <tr>
                                     <th>Pro Pharmacy</th>
                                     <th>15</th>
-                                    <th>{pro.available}</th>
-                                    <th>{pro.a}</th>
-                                    <th>{pro.b}</th>
+                                    <th>{this.props.outlet.pro.available}</th>
+                                    <th>{this.props.outlet.pro.a}</th>
+                                    <th>{this.props.outlet.pro.b}</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -96,13 +98,24 @@ class Admin extends Component{
             }
         }
         return(
-            <div className="white-page mt-5">
+            <div className="white-page">
+                <nav aria-label="breadcrumb">
+                    <ol className="breadcrumb row">
+                        <li className="breadcrumb-item">
+                            <Link to="/">Home</Link>
+                        </li>
+
+                        <li className="breadcrumb-item active" aria-current="page">
+                            Admin
+                        </li>
+                    </ol>
+                </nav>
                 {this.state.auth ? (null) : (
                     <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="admin">ADMIN</label>
-                    <input value={this.state.admin} onChange={this.handleChange} type="text" name="admin" id="admin" placeholder="*ID" />
-                    <input type="submit" value="Login as Admin" />
-                </form>
+                        <label htmlFor="admin">ADMIN</label>
+                        <input value={this.state.admin} onChange={this.handleChange} type="text" name="admin" id="admin" placeholder="*ID" />
+                        <input type="submit" value="Login as Admin" />
+                    </form>
                 )}
                 {renderTable(this.state.auth)}
             </div>
@@ -116,4 +129,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps , null)(Admin);
+const mapDispatchToProps = dispatch => {
+    return{
+        fetchOutlet : ()=>dispatch(fetchOutlet())
+    }
+}
+
+export default connect(mapStateToProps , mapDispatchToProps)(Admin);

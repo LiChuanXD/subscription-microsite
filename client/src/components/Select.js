@@ -1,16 +1,17 @@
 import React , { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect} from 'react-redux';
+import  {fetchOutlet} from '../redux/actions/actions';
 
 class Select extends Component{
+    componentDidMount(){
+        this.props.fetchOutlet();
+    };
 
     render(){
-        const avenue = this.props.outlet[0].outlet;
-        const live = this.props.outlet[1].outlet;
-        const day = this.props.outlet[2].outlet;
-        const pro = this.props.outlet[3].outlet;
+        const {outlet} = this.props;
 
-        const nameOutput = name =>{
+        const outputName = name => {
             if(name === "avenue"){
                 return "Avenue Pharmacy"
             }else if(name === "live"){
@@ -19,24 +20,38 @@ class Select extends Component{
                 return "Day Pharmacy"
             }else if(name === "pro"){
                 return "Pro Pharmacy"
-            }
+            }else{
+                return null
+            };
         };
+
         return(
             <div className="select-page">
+                <nav aria-label="breadcrumb">
+                    <ol className="breadcrumb row">
+                        <li className="breadcrumb-item">
+                            <Link to="/">Home</Link>
+                        </li>
+
+                        <li className="breadcrumb-item active" aria-current="page">
+                            Select
+                        </li>
+                    </ol>
+                </nav>
                 <div className="select-box">
-                    <Link to={`/select/${avenue}`} className="d-block">{nameOutput(avenue)}</Link>
+                    <Link to={`/select/${outlet.avenue.outlet}`} className="d-block">{outputName(outlet.avenue.outlet)}</Link>
                 </div>
     
                 <div className="select-box">
-                    <Link to={`/select/${live}`} className="d-block">{nameOutput(live)}</Link>
+                    <Link to={`/select/${outlet.live.outlet}`} className="d-block">{outputName(outlet.live.outlet)}</Link>
                 </div>
     
                 <div className="select-box">
-                    <Link to={`/select/${day}`} className="d-block">{nameOutput(day)}</Link>
+                    <Link to={`/select/${outlet.day.outlet}`} className="d-block">{outputName(outlet.day.outlet)}</Link>
                 </div>
                 
                 <div className="select-box">
-                    <Link to={`/select/${pro}`} className="d-block">{nameOutput(pro)}</Link>
+                    <Link to={`/select/${outlet.pro.outlet}`} className="d-block">{outputName(outlet.pro.outlet)}</Link>
                 </div>
             </div>
         )
@@ -49,10 +64,10 @@ const mapStateToProps = state => {
     };
 };
 
-//const mapDispatchToProps = dispatch => {
-//    return{
-//        fetchOutlet : ()=>dispatch(fetchOutlet())
-//    }
-//};
+const mapDispatchToProps = dispatch => {
+    return{
+        fetchOutlet : ()=>dispatch(fetchOutlet())
+    }
+};
 
-export default connect(mapStateToProps , null)(Select);
+export default connect(mapStateToProps , mapDispatchToProps)(Select);

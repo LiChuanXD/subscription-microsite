@@ -1,15 +1,14 @@
 import React , { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
-import { registerUser } from '../redux/actions/actions';
+import { Redirect , Link } from 'react-router-dom'
+import { registerUser , clearError } from '../redux/actions/actions';
 
 class Register extends Component {
     constructor(props){
         super(props);
         this.state = {
             name : "",
-            number : "",
-            error : false
+            number : ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,23 +22,7 @@ class Register extends Component {
 
     handleSubmit(e){
         e.preventDefault();
-        const {name , number} = this.state;
-        const user = {name , number};
-        const regex = /\D/g;
-        if(regex.test(number)){
-            //got alphabet
-            this.setState({
-                ...this.state,
-                error : true
-            });
-        }else{
-            this.setState({
-                ...this.state,
-                error : false
-            });
-            this.props.registerUser(user);
-        }
-        
+        this.props.registerUser(this.state);
     };
 
     render(){
@@ -48,6 +31,25 @@ class Register extends Component {
         }else{
             return(
                 <div className="white-page">
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb row">
+                            <li className="breadcrumb-item">
+                                <Link to="/">Home</Link>
+                            </li>
+
+                            <li className="breadcrumb-item">
+                                <Link to="/select">Select</Link>
+                            </li>
+                            <li className="breadcrumb-item">
+                                <Link to="/user">User</Link>
+                            </li>
+
+                            <li className="breadcrumb-item active" aria-current="page">
+                                Register
+                            </li>
+                        </ol>
+                    </nav>
+
                     <h1 className="mb-5 text-center">Register as new Member</h1>
                     <form className="mt-5" onSubmit={this.handleSubmit}>
                         <div className="form-group">
@@ -56,14 +58,15 @@ class Register extends Component {
                         </div>
     
                         <div className="form-group">
-                            
                             <label htmlFor="number">Enter your Phone Number</label>
-                            {this.state.error ? <div className="alert alert-danger" role="alert">
-                                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <strong>Please enter Number only</strong>
-                            </div> : null}
+                            {this.props.error.showError ? (
+                                <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <button onClick={()=>{this.props.clearError()}} type="button" data-dismiss="alert" className="close" aria-label="Close">
+                                        <span>&times;</span>
+                                    </button>
+                                    <strong>{this.props.error.msg}</strong>
+                                </div>
+                            ) : (null)}
                             <input required className="form-control text-center" type="text" name="number" id="number" placeholder="Mobile Number" value={this.state.number} onChange={this.handleChange} />
                         </div>
     
@@ -86,13 +89,15 @@ class Register extends Component {
 
 const mapStateToProps = state => {
     return{
-        user : state.member
+        user : state.member,
+        error : state.error
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return{
-        registerUser : user=>dispatch(registerUser(user))
+        registerUser : user=>dispatch(registerUser(user)),
+        clearError : ()=>dispatch(clearError())
     }
 };
 
