@@ -24,13 +24,14 @@ const request = window.indexedDB.open("TestingDB" , 1);
 
 request.onerror = e => {
     console.log("Request Error Occured");
-}
+};
 
 request.onsuccess = e => {
-    db = e.target.result
-}
+    db = e.target.result;
+    console.log("Request Successful");
+};
 
-console.log("DB = " , db)
+console.log("DB = " , db);
 
 //indexed db testing end
 
