@@ -14,6 +14,26 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 
+//indexed db testing
+if(!window.indexedDB){
+    console.log("Browser does not support IndexedDB")
+};
+
+const db;
+const request = window.indexedDB.open("TestingDB" , 1);
+
+request.onerror = e => {
+    console.log("Request Error Occured");
+}
+
+request.onsuccess = e => {
+    db = e.target.result
+}
+
+console.log("DB = " , db)
+
+//indexed db testing end
+
 //connect to mongodb
 mongoose.connect(
     process.env.MONGO_URI,
